@@ -1,0 +1,104 @@
+openapi: 3.0.3
+info:
+  title: Bookstore API
+  version: 1.0.0
+  description: API for managing books in a bookstore.
+
+servers:
+  - url: http://localhost:8080/api
+
+paths:
+  /books:
+    get:
+      summary: List all books
+      responses:
+        '200':
+          description: A list of books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+    post:
+      summary: Add a new book
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        '201':
+          description: Book created
+
+  /books/{isbn}:
+    get:
+      summary: Get a book by ISBN
+      parameters:
+        - name: isbn
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Book found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '404':
+          description: Book not found
+    put:
+      summary: Update a book by ISBN
+      parameters:
+        - name: isbn
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        '200':
+          description: Book updated
+    delete:
+      summary: Delete a book by ISBN
+      parameters:
+        - name: isbn
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Book deleted
+
+components:
+  schemas:
+    Book:
+      type: object
+      required:
+        - title
+        - published
+        - isbn
+        - author
+        - chapters
+      properties:
+        title:
+          type: string
+        published:
+          type: boolean
+        isbn:
+          type: string
+        author:
+          type: string
+        chapters:
+          type: array
+          items:
+            type: string
