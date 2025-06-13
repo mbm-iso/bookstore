@@ -12,13 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Author {
 
-    /**
-     * firstName, lastName (string)
-     *
-     * biography (optional)
-     *
-     * birthDate (optional, ISO date)
-     */
     private String firstName;
     private String lastName;
     private String email;

@@ -2,43 +2,48 @@ package com.example.bookstore.controller;
 
 import com.example.bookstore.generated.controller.BooksApiDelegate;
 import com.example.bookstore.generated.dto.BookDTO;
+import com.example.bookstore.service.BookDTOService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+@Slf4j
+@Component
+@AllArgsConstructor
 public class BooksDelegate implements BooksApiDelegate {
 
-    @Override
-    public Optional<NativeWebRequest> getRequest() {
-        return Optional.empty();
-    }
+    private final BookDTOService bookDTOService;
 
     @Override
     public ResponseEntity<List<BookDTO>> booksGet() {
-        return new ResponseEntity<>(new ArrayList<BookDTO>(), HttpStatus.OK);
+        List<BookDTO> allBooks = bookDTOService.getAllBooks();
+        return new ResponseEntity<>(allBooks, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Void> booksIsbnDelete(String isbn) {
-        return new ResponseEntity<>(HttpStatus.OK);
+        bookDTOService.deleteBook(isbn);
+        return ResponseEntity.noContent().build();
     }
 
     @Override
     public ResponseEntity<BookDTO> booksIsbnGet(String isbn) {
-        return new ResponseEntity<>(new BookDTO(), HttpStatus.OK);
+        BookDTO bookByIsbn = bookDTOService.getBookByIsbn(isbn);
+        return new ResponseEntity<>(bookByIsbn, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Void> booksIsbnPut(String isbn, BookDTO bookDTO) {
-        return BooksApiDelegate.super.booksIsbnPut(isbn, bookDTO);
+    public ResponseEntity<BookDTO> booksIsbnPut(String isbn, BookDTO bookDTO) {
+        bookDTOService.updateBook(bookDTO);
+        return new ResponseEntity<>(bookDTOService.getBookByIsbn(isbn), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Void> booksPost(BookDTO bookDTO) {
-        return BooksApiDelegate.super.booksPost(bookDTO);
+    public ResponseEntity<BookDTO> booksPost(BookDTO bookDTO) {
+        return new ResponseEntity<>(bookDTOService.createBook(bookDTO), HttpStatus.CREATED);
     }
 }

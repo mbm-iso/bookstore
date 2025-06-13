@@ -31,6 +31,10 @@ paths:
       responses:
         '201':
           description: Book created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
 
   /books/{isbn}:
     get:
@@ -67,6 +71,10 @@ paths:
       responses:
         '200':
           description: Book updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
     delete:
       summary: Delete a book by ISBN
       parameters:
@@ -79,8 +87,46 @@ paths:
         '204':
           description: Book deleted
 
+  /bookrequests/{isbn}:
+    get:
+      summary: Get a BookRequest by ID
+      operationId: getBookRequestById
+      parameters:
+        - name: isbn
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A read-only representation of a Book
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookRequest'
+        '404':
+          description: Book not found
+
 components:
   schemas:
+    Author:
+      type: object
+      required:
+        - firstName
+        - lastName
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        biography:
+          type: string
+        birthDate:
+          type: string
+          format: date
     Book:
       type: object
       required:
@@ -89,6 +135,37 @@ components:
         - isbn
         - author
         - chapters
+      properties:
+        title:
+          type: string
+        published:
+          type: boolean
+        isbn:
+          type: string
+        author:
+          $ref: '#/components/schemas/Author'
+        chapters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Chapter'
+
+    Chapter:
+      type: object
+      required:
+        - number
+        - title
+        - summary
+      properties:
+        number:
+          type: integer
+        title:
+          type: string
+        summary:
+          type: string
+
+    # BookRequest is a Readonly Book object for UI
+    BookRequest:
+      type: object
       properties:
         title:
           type: string
