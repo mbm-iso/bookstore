@@ -2,8 +2,10 @@ package com.example.bookstore.persistence.jpa.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
+@ToString(exclude = "book")
 @Data
 public class ChapterEntity {
 

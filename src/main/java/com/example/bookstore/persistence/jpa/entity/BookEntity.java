@@ -4,12 +4,14 @@ import com.example.bookstore.model.Author;
 import com.example.bookstore.model.Chapter;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@ToString(exclude = "chapters")
 @Data
 public class BookEntity {
 
