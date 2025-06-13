@@ -1,5 +1,8 @@
 pipeline {
-    agent any
+
+    agent {
+        label 'docker-jdk17'
+    }
 
     environment {
         NEXUS_URL = 'https://localhost:8081/repository/maven-releases/'
