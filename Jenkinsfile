@@ -1,11 +1,11 @@
 pipeline {
 
     agent {
-        label 'docker-jdk17'
+        label 'docker-jdk21'
     }
 
     environment {
-        NEXUS_URL = 'https://localhost:8081/repository/maven-releases/'
+        NEXUS_URL = 'https://0.0.0.0:8081/repository/maven-releases/'
         NEXUS_CREDENTIALS_ID = 'nexus-creds' // Jenkins credential ID
     }
 
