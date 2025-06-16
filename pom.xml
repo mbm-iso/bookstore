@@ -11,11 +11,12 @@
 
     <properties>
         <java.version>21</java.version>
-        <!-- 2.6.0 ist nicht kompatible mit spring 6 -->
         <springdoc.version>2.6.0</springdoc.version>
         <openapitools.version>7.5.0</openapitools.version>
         <spring.boot.version>3.3.4</spring.boot.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <!-- Default value if not overridden -->
+        <nexus.url>http://localhost:8081</nexus.url>
     </properties>
 
     <dependencyManagement>
@@ -239,11 +240,11 @@
     <distributionManagement>
         <repository>
             <id>nexus-releases</id>
-            <url>http://0.0.0.0:8081/repository/maven-releases/</url>
+            <url>${nexus.url}/repository/maven-releases/</url>
         </repository>
         <snapshotRepository>
             <id>nexus-snapshots</id>
-            <url>http://0.0.0.0:8081/repository/maven-snapshots/</url>
+            <url>${nexus.url}/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
