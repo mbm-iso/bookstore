@@ -5,7 +5,7 @@ pipeline {
     }
 
     environment {
-        NEXUS_URL = 'https://0.0.0.0:8081/repository/maven-releases/'
+        NEXUS_URL = 'https://host.docker.internal:8081/repository/maven-releases/'
         NEXUS_CREDENTIALS_ID = 'nexus-creds' // Jenkins credential ID
     }
 
@@ -14,6 +14,12 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean compile -DskipTests'
             }
         }
 
