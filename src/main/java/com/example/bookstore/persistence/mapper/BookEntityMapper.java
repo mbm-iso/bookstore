@@ -15,8 +15,14 @@ public interface BookEntityMapper {
     Book bookEntityToBook(BookEntity bookEntity);
 
     @Mapping(target = "chapters", ignore = true) // we will handle chapters manually
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "author.id", ignore = true)
     BookEntity bookToBookEntity(Book book);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "book", ignore = true)
     ChapterEntity chapterToChapterEntity(Chapter chapter);
 
     @AfterMapping
@@ -29,5 +35,6 @@ public interface BookEntityMapper {
         }
     }
 
+    @Mapping(target = "id", ignore = true)
     BookEntity updateBookEntity(@MappingTarget BookEntity bookEntity, Book book);
 }

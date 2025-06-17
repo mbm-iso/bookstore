@@ -8,6 +8,7 @@ import com.example.bookstore.model.Chapter;
 import com.example.bookstore.persistence.servive.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Component
+@Profile("h2db") // Profil um h2 init Daten nutzen zu können
 public class BookStoreLoader implements CommandLineRunner {
 
     private final BookService bookService;
